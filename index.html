@@ -53,6 +53,7 @@ label{font-weight:600;font-size:.95rem}
 .opt:disabled{cursor:default}
 .opt.ok{border-color:var(--ok);background:var(--okbg)}.opt.no{border-color:var(--no);background:var(--nobg)}
 .bar{height:8px;background:var(--line);border-radius:8px;overflow:hidden;margin-bottom:16px}.bar i{display:block;height:100%;background:var(--pri);width:0;transition:width .3s}
+.tm{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:6px 0 14px}.tm .tt{font-size:2.4rem;font-weight:800;color:var(--pri);font-variant-numeric:tabular-nums}.tm .tt.end{color:var(--no)}
 .cert{border:6px double var(--pri);border-radius:6px;padding:28px 18px;text-align:center}
 .cert h3{margin:0 0 6px;font-size:1.3rem}.cert .nm{font-size:1.9rem;font-weight:800;margin:10px 0}
 .big{font-size:2.4rem;font-weight:800;color:var(--pri)}
@@ -97,6 +98,8 @@ label{font-weight:600;font-size:.95rem}
 <section id="s3">
 <h2>Aktivitas: hubungkan potensi dengan pilihan</h2>
 <p>Pilih bidang pendidikan atau keahlian yang paling mungkin cocok untuk tiap tokoh.</p>
+<div class="tm"><span class="tt" id="t3">06:00</span><button class="btn alt" data-t="t3" data-s="360">Mulai timer diskusi</button></div>
+<p class="mut">Diskusikan berpasangan sebelum menjawab: pendidikan atau keahlian apa yang cocok dengan potensi tiap tokoh?</p>
 <div id="cases"></div>
 <button class="btn alt" id="chk">Periksa jawaban</button>
 <div class="fb" id="cfb"></div>
@@ -116,6 +119,7 @@ label{font-weight:600;font-size:.95rem}
 
 <section id="s5">
 <h2>Refleksi: satu langkah nyata</h2>
+<div class="tm"><span class="tt" id="t5">03:00</span><button class="btn alt" data-t="t5" data-s="180">Mulai timer</button></div>
 <label for="r1">Potensi saya adalah…</label><textarea id="r1"></textarea>
 <label for="r2">Pilihan yang ingin saya eksplorasi adalah…</label><textarea id="r2"></textarea>
 <label for="r3">Langkah saya minggu ini adalah…</label><textarea id="r3"></textarea>
@@ -131,6 +135,7 @@ label{font-weight:600;font-size:.95rem}
 <div id="ck"></div>
 <p>telah menyelesaikan materi <b>Mengenali Potensi Diri untuk Merencanakan Masa Depan</b></p>
 <p>Nilai akhir <b id="cs"></b> (<span id="cp"></span>)</p>
+<p id="cl"></p>
 <p class="mut" id="cd"></p>
 </div>
 <p class="noprint" style="margin-top:14px"><button class="btn" onclick="window.print()">Cetak sertifikat</button> <button class="btn alt" id="again">Ulangi dari awal</button></p>
@@ -146,6 +151,7 @@ const P=[
 ["Sosial","#2F9E44","Peduli dan senang membantu orang lain. Contoh bidang: keperawatan, psikologi, pekerjaan sosial."],
 ["Kepemimpinan","#E8590C","Berani mengambil keputusan dan mengajak orang lain. Contoh bidang: manajemen, organisasi, kewirausahaan."],
 ["Praktik","#7048E8","Terampil dan teliti dengan tangan atau alat. Contoh bidang: teknik, tata boga, otomotif."]];
+const E=["SMA Bahasa/IPS, SMK Broadcasting; kuliah Ilmu Komunikasi, Hukum, Pendidikan.","SMK Desain Komunikasi Visual, Animasi, Tata Busana; kuliah Desain, Seni, Arsitektur.","SMA MIPA, SMK Rekayasa Perangkat Lunak; kuliah Informatika, Teknik, Statistika, Akuntansi.","SMK Keperawatan/Farmasi, SMA IPS/MIPA; kuliah Psikologi, Kedokteran, Pendidikan.","SMA IPS, SMK Manajemen/Bisnis; kuliah Manajemen, Administrasi, Kewirausahaan.","SMK Teknik Kendaraan Ringan, Teknik Mesin, Tata Boga; Politeknik."];
 const names=["Mulai","Apersepsi","Materi","Aktivitas","Kuis","Refleksi","Sertifikat"];
 let cur=0,max=0,score=0;
 const st=$("steps");
@@ -170,7 +176,7 @@ const path=document.createElementNS("http://www.w3.org/2000/svg","path");
 path.setAttribute("d",`M${cx} ${cy}L${x0} ${y0}A${R} ${R} 0 0 1 ${x1} ${y1}Z`);path.setAttribute("fill",p[1]);
 path.setAttribute("tabindex","0");path.setAttribute("role","button");path.setAttribute("aria-label",p[0]);
 const t=document.createElementNS("http://www.w3.org/2000/svg","text");t.setAttribute("x",cx+85*Math.cos(am));t.setAttribute("y",cy+85*Math.sin(am)+4);t.setAttribute("text-anchor","middle");t.textContent=p[0];
-const pick=()=>{wh.querySelectorAll("path").forEach(q=>q.classList.remove("sel"));path.classList.add("sel");$("info").innerHTML=`<b style="color:${p[1]}">${p[0]}</b><p>${p[2]}</p>`};
+const pick=()=>{wh.querySelectorAll("path").forEach(q=>q.classList.remove("sel"));path.classList.add("sel");$("info").innerHTML=`<b style="color:${p[1]}">${p[0]}</b><p>${p[2]}</p><p class="mut"><b>Pilihan pendidikan:</b> ${E[i]}</p>`};
 path.onclick=pick;path.onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();pick()}};
 wh.appendChild(path);wh.appendChild(t)});
 $("n2").onclick=()=>show(3);
@@ -204,8 +210,13 @@ const f=document.createElement("div");f.className="fb show "+(good?"ok":"no");f.
 const nb=document.createElement("button");nb.className="btn";nb.textContent=i<Q.length-1?"Soal berikutnya":"Lihat nilai";nb.onclick=()=>quiz(i+1);a.appendChild(nb);nb.focus()};
 a.appendChild(b)})}
 $("n4").onclick=()=>show(5);
+// timer
+const TM={};document.querySelectorAll("[data-t]").forEach(b=>b.onclick=()=>{const id=b.dataset.t,el=$(id);clearInterval(TM[id]);let n=+b.dataset.s;el.classList.remove("end");
+const f=x=>String(Math.floor(x/60)).padStart(2,"0")+":"+String(x%60).padStart(2,"0");el.textContent=f(n);
+TM[id]=setInterval(()=>{n--;el.textContent=f(Math.max(n,0));if(n<=0){clearInterval(TM[id]);el.classList.add("end")}},1000)});
 // refleksi dan sertifikat
 $("n5").onclick=()=>{$("cn").textContent=$("nm").value;$("ck").textContent=$("kl").value?"Kelas "+$("kl").value:"";
+const v=k=>$(k).value.trim();$("cl").innerHTML=v("r1")||v("r2")||v("r3")?"<b>Langkah nyata:</b> Potensi saya adalah "+(v("r1")||"…")+", pilihan yang ingin saya eksplorasi adalah "+(v("r2")||"…")+", langkah saya minggu ini adalah "+(v("r3")||"…")+".":"";
 $("cs").textContent=$("sc").textContent;$("cp").textContent=$("pr").textContent;
 $("cd").textContent=new Date().toLocaleDateString("id-ID",{day:"numeric",month:"long",year:"numeric"});show(6)};
 $("again").onclick=()=>{max=0;document.querySelectorAll("input,textarea,select").forEach(e=>e.value="");document.querySelectorAll(".chip").forEach(c=>c.setAttribute("aria-pressed","false"));
