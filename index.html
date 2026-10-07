@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Peta Potensiku – Media Interaktif BK</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F3F6FB;--ink:#1B2340;--mut:#5A6385;--pri:#3B5BDB;--pri2:#E7ECFD;--acc:#FFB703;--ok:#237A57;--okbg:#E3F5EC;--no:#B3402A;--nobg:#FCEBE6;--card:#fff;--line:#D9DFEE}
+@media(prefers-color-scheme:dark){:root:not([data-l]){--bg:#121629;--ink:#EEF1FB;--mut:#A7AFCC;--pri:#8CA2FF;--pri2:#232A4F;--card:#1B2038;--line:#323A63;--okbg:#17372B;--ok:#7FDDB0;--nobg:#3E211B;--no:#FFA591}}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{font-family:Nunito,"Segoe UI",Arial,sans-serif;background:var(--bg);color:var(--ink);font-size:18px;line-height:1.55}
+header{padding:20px 16px 8px;max-width:820px;margin:auto}
+h1{font-size:1.5rem;font-weight:800;margin:0 0 12px}
+.steps{display:flex;gap:6px;flex-wrap:wrap}
+.steps button{flex:1;min-width:92px;border:0;border-bottom:4px solid var(--line);background:none;color:var(--mut);font:600 .8rem Nunito,sans-serif;padding:6px 2px;cursor:pointer}
+.steps button.on{border-color:var(--pri);color:var(--ink);font-weight:800}
+.steps button.done{border-color:var(--ok)}
+.steps button:disabled{cursor:default;opacity:.55}
+main{max-width:820px;margin:auto;padding:8px 16px 48px}
+section{display:none;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:24px}
+section.on{display:block}
+h2{font-size:1.45rem;margin:0 0 8px;font-weight:800}
+p{margin:0 0 12px}
+.mut{color:var(--mut);font-size:.9rem}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+.btn{background:var(--pri);color:#fff;border:0;border-radius:10px;padding:12px 22px;font-weight:800;cursor:pointer;margin-top:8px}
+html[data-l] .btn,.btn{color:#fff}
+@media(prefers-color-scheme:dark){.btn{color:#10152C}}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn.alt{background:var(--pri2);color:var(--pri)}
+input,select,textarea{width:100%;padding:10px 12px;border:2px solid var(--line);border-radius:10px;background:var(--bg);margin:4px 0 14px}
+textarea{min-height:70px}
+label{font-weight:600;font-size:.95rem}
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0}
+.chip{border:2px solid var(--line);background:var(--bg);border-radius:999px;padding:9px 18px;cursor:pointer;font-weight:600}
+.chip[aria-pressed=true]{border-color:var(--pri);background:var(--pri2);font-weight:800}
+.fb{border-radius:10px;padding:10px 14px;margin:10px 0;display:none}
+.fb.show{display:block}.fb.ok{background:var(--okbg);color:var(--ok)}.fb.no{background:var(--nobg);color:var(--no)}
+.wheel{display:flex;gap:24px;align-items:center;flex-wrap:wrap}
+.wheel svg{width:min(300px,100%);flex:none}
+.wheel path{cursor:pointer;stroke:var(--card);stroke-width:3;transition:transform .15s;transform-origin:150px 150px}
+.wheel path:hover,.wheel path.sel{transform:scale(1.06)}
+.wheel text{pointer-events:none;font:800 11px Nunito,sans-serif;fill:#fff}
+.info{flex:1;min-width:220px;border-left:5px solid var(--acc);padding:4px 0 4px 16px}
+.know{background:var(--pri2);border-radius:10px;padding:12px 16px;margin-top:18px}
+.case{border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin-bottom:12px}
+.case select{margin:8px 0 0}
+.q{font-weight:800;margin-bottom:10px}
+.opt{display:block;width:100%;text-align:left;border:2px solid var(--line);background:var(--bg);border-radius:10px;padding:10px 14px;margin-bottom:8px;cursor:pointer}
+.opt:disabled{cursor:default}
+.opt.ok{border-color:var(--ok);background:var(--okbg)}.opt.no{border-color:var(--no);background:var(--nobg)}
+.bar{height:8px;background:var(--line);border-radius:8px;overflow:hidden;margin-bottom:16px}.bar i{display:block;height:100%;background:var(--pri);width:0;transition:width .3s}
+.cert{border:6px double var(--pri);border-radius:6px;padding:28px 18px;text-align:center}
+.cert h3{margin:0 0 6px;font-size:1.3rem}.cert .nm{font-size:1.9rem;font-weight:800;margin:10px 0}
+.big{font-size:2.4rem;font-weight:800;color:var(--pri)}
+@media print{body{background:#fff;color:#000}header,.noprint{display:none!important}section{display:none!important}#s6{display:block!important;border:0}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header>
+<h1>Peta Potensiku</h1>
+<nav class="steps" id="steps" aria-label="Langkah belajar"></nav>
+</header>
+<main>
+
+<section id="s0">
+<h2>Selamat datang!</h2>
+<p>Di sini kamu akan mengenali potensi dirimu dan menyusun satu langkah nyata untuk masa depanmu. Waktunya sekitar 30 menit.</p>
+<label for="nm">Nama</label><input id="nm" autocomplete="name">
+<label for="kl">Kelas</label><input id="kl" placeholder="Contoh: IX-A">
+<button class="btn" id="go">Mulai belajar</button>
+</section>
+
+<section id="s1">
+<h2>Apersepsi</h2>
+<p>Bayangkan kamu boleh memilih satu hal yang paling kamu kuasai. Apa yang kamu pilih?</p>
+<div class="chips" id="poll"></div>
+<div class="fb ok" id="pollfb"></div>
+<button class="btn" id="n1" disabled>Lanjut ke materi</button>
+</section>
+
+<section id="s2">
+<h2>Materi: enam potensi diri</h2>
+<p>Potensi diri adalah kemampuan, minat, dan karakter positif yang bisa kamu kembangkan. Ketuk tiap bagian roda untuk melihat penjelasannya.</p>
+<div class="wheel">
+<svg viewBox="0 0 300 300" id="wh" role="img" aria-label="Roda enam potensi diri"></svg>
+<div class="info" id="info" aria-live="polite"><b>Pilih satu bagian roda.</b></div>
+</div>
+<div class="know"><b>Tahukah kamu?</b> Potensi tidak hanya berupa nilai akademik. Satu potensi bisa berkembang ke banyak pilihan pendidikan, dan kamu bisa mengenalinya dari kegiatan yang disukai, keberhasilan yang pernah diraih, serta masukan dari teman.</div>
+<button class="btn" id="n2">Lanjut ke aktivitas</button>
+</section>
+
+<section id="s3">
+<h2>Aktivitas: hubungkan potensi dengan pilihan</h2>
+<p>Pilih bidang pendidikan atau keahlian yang paling mungkin cocok untuk tiap tokoh.</p>
+<div id="cases"></div>
+<button class="btn alt" id="chk">Periksa jawaban</button>
+<div class="fb" id="cfb"></div>
+<p class="mut">Ingat: satu potensi bisa cocok dengan beberapa bidang. Jawaban di sini adalah salah satu kemungkinan.</p>
+<button class="btn" id="n3" disabled>Lanjut ke kuis</button>
+</section>
+
+<section id="s4">
+<h2>Kuis akhir</h2>
+<div class="bar"><i id="pb"></i></div>
+<div id="qa"></div>
+<div id="qres" style="display:none;text-align:center">
+<p>Nilai akhirmu</p><div class="big" id="sc"></div><p id="pr" style="font-weight:800"></p>
+<button class="btn" id="n4">Lanjut ke refleksi</button>
+</div>
+</section>
+
+<section id="s5">
+<h2>Refleksi: satu langkah nyata</h2>
+<label for="r1">Potensi saya adalah…</label><textarea id="r1"></textarea>
+<label for="r2">Pilihan yang ingin saya eksplorasi adalah…</label><textarea id="r2"></textarea>
+<label for="r3">Langkah saya minggu ini adalah…</label><textarea id="r3"></textarea>
+<label for="r4">Hal yang masih membingungkan bagi saya adalah…</label><textarea id="r4"></textarea>
+<button class="btn" id="n5">Lihat sertifikat</button>
+</section>
+
+<section id="s6">
+<div class="cert">
+<h3>Sertifikat Hasil Belajar</h3>
+<div>diberikan kepada</div>
+<div class="nm" id="cn"></div>
+<div id="ck"></div>
+<p>telah menyelesaikan materi <b>Mengenali Potensi Diri untuk Merencanakan Masa Depan</b></p>
+<p>Nilai akhir <b id="cs"></b> (<span id="cp"></span>)</p>
+<p class="mut" id="cd"></p>
+</div>
+<p class="noprint" style="margin-top:14px"><button class="btn" onclick="window.print()">Cetak sertifikat</button> <button class="btn alt" id="again">Ulangi dari awal</button></p>
+</section>
+
+</main>
+<script>
+const $=id=>document.getElementById(id);
+const P=[
+["Komunikasi","#3B5BDB","Mampu menyampaikan ide dan mendengarkan dengan baik. Contoh bidang: jurnalistik, hukum, pendidikan."],
+["Kreativitas","#C2255C","Mudah menemukan ide baru dan membuat karya. Contoh bidang: desain, seni, film."],
+["Logika","#0B7285","Suka menganalisis dan memecahkan masalah. Contoh bidang: informatika, sains, akuntansi."],
+["Sosial","#2F9E44","Peduli dan senang membantu orang lain. Contoh bidang: keperawatan, psikologi, pekerjaan sosial."],
+["Kepemimpinan","#E8590C","Berani mengambil keputusan dan mengajak orang lain. Contoh bidang: manajemen, organisasi, kewirausahaan."],
+["Praktik","#7048E8","Terampil dan teliti dengan tangan atau alat. Contoh bidang: teknik, tata boga, otomotif."]];
+const names=["Mulai","Apersepsi","Materi","Aktivitas","Kuis","Refleksi","Sertifikat"];
+let cur=0,max=0,score=0;
+const st=$("steps");
+names.forEach((n,i)=>{const b=document.createElement("button");b.textContent=n;b.onclick=()=>show(i);st.appendChild(b)});
+function show(i){cur=i;max=Math.max(max,i);
+document.querySelectorAll("section").forEach((s,k)=>s.classList.toggle("on",k===i));
+[...st.children].forEach((b,k)=>{b.className=k===i?"on":k<i?"done":"";b.disabled=k>max});
+window.scrollTo({top:0})}
+// mulai
+$("go").onclick=()=>{if(!$("nm").value.trim()){$("nm").focus();$("nm").style.borderColor="var(--no)";return}show(1)};
+// apersepsi
+P.forEach(p=>{const b=document.createElement("button");b.className="chip";b.setAttribute("aria-pressed","false");b.textContent=p[0];
+b.onclick=()=>{document.querySelectorAll(".chip").forEach(c=>c.setAttribute("aria-pressed","false"));b.setAttribute("aria-pressed","true");
+const f=$("pollfb");f.textContent="Pilihanmu: "+p[0]+". Tidak ada pilihan yang salah. Mari kita lihat potensimu lebih dekat.";f.classList.add("show");$("n1").disabled=false};
+$("poll").appendChild(b)});
+$("n1").onclick=()=>show(2);
+// roda
+const wh=$("wh"),R=130,cx=150,cy=150;
+P.forEach((p,i)=>{const a0=(-90+i*60)*Math.PI/180,a1=(-90+(i+1)*60)*Math.PI/180,am=(a0+a1)/2;
+const x0=cx+R*Math.cos(a0),y0=cy+R*Math.sin(a0),x1=cx+R*Math.cos(a1),y1=cy+R*Math.sin(a1);
+const path=document.createElementNS("http://www.w3.org/2000/svg","path");
+path.setAttribute("d",`M${cx} ${cy}L${x0} ${y0}A${R} ${R} 0 0 1 ${x1} ${y1}Z`);path.setAttribute("fill",p[1]);
+path.setAttribute("tabindex","0");path.setAttribute("role","button");path.setAttribute("aria-label",p[0]);
+const t=document.createElementNS("http://www.w3.org/2000/svg","text");t.setAttribute("x",cx+85*Math.cos(am));t.setAttribute("y",cy+85*Math.sin(am)+4);t.setAttribute("text-anchor","middle");t.textContent=p[0];
+const pick=()=>{wh.querySelectorAll("path").forEach(q=>q.classList.remove("sel"));path.classList.add("sel");$("info").innerHTML=`<b style="color:${p[1]}">${p[0]}</b><p>${p[2]}</p>`};
+path.onclick=pick;path.onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();pick()}};
+wh.appendChild(path);wh.appendChild(t)});
+$("n2").onclick=()=>show(3);
+// aktivitas
+const C=[["Rani suka membantu teman dan pandai menjelaskan.","Kesehatan/Keperawatan"],["Dimas suka teknologi dan senang memecahkan soal logika.","Informatika"],["Salsa suka menggambar dan sering punya ide kreatif.","Desain"],["Bayu suka praktik dan teliti saat memperbaiki alat.","Teknik/SMK"]];
+const opts=["Desain","Teknik/SMK","Kesehatan/Keperawatan","Informatika"];
+C.forEach((c,i)=>{const d=document.createElement("div");d.className="case";
+d.innerHTML=`<label for="c${i}">${c[0]}</label><select id="c${i}"><option value="">Pilih bidang…</option>${opts.map(o=>`<option>${o}</option>`).join("")}</select>`;$("cases").appendChild(d)});
+$("chk").onclick=()=>{let ok=0,miss=0;C.forEach((c,i)=>{const v=$("c"+i).value;if(v===c[1])ok++;if(!v)miss++});
+const f=$("cfb");if(miss){f.className="fb show no";f.textContent="Masih ada tokoh yang belum kamu jawab. Lengkapi dulu ya.";return}
+f.className="fb show "+(ok===4?"ok":"no");
+f.textContent=ok===4?"Hebat! Kamu bisa menghubungkan potensi dengan bidang pendidikan.":ok+" dari 4 cocok. Coba baca lagi minat tiap tokoh, lalu periksa kembali.";
+$("n3").disabled=ok<2};
+$("n3").onclick=()=>{show(4);quiz(0)};
+// kuis
+const Q=[["Apa yang dimaksud potensi diri?",["Hanya nilai rapor","Kemampuan, minat, dan karakter positif yang dapat dikembangkan","Bakat bawaan yang tidak bisa berubah","Kelebihan yang dimiliki orang lain"],1,"Potensi mencakup kemampuan, minat, dan karakter, dan semuanya bisa dikembangkan."],
+["Cara paling tepat mengenali potensi diri adalah…",["Membandingkan diri dengan teman paling pandai","Menunggu orang lain menentukan","Mengingat kegiatan yang disukai, keberhasilan, dan meminta masukan teman","Ikut pilihan teman"],2,"Potensi ditemukan lewat minat, pengalaman berhasil, dan umpan balik orang lain."],
+["Rani suka membantu dan pandai menjelaskan. Pernyataan yang paling tepat…",["Potensinya bisa mengarah ke beberapa bidang, misalnya keperawatan atau pendidikan","Rani hanya cocok di satu bidang","Rani tidak punya potensi karena nilainya biasa","Rani harus mengikuti pilihan temannya"],0,"Satu potensi dapat berkembang ke banyak pilihan pendidikan."],
+["Langkah nyata yang paling jelas dan realistis adalah…",["Ingin sukses","Nanti dipikirkan saja","Menunggu disuruh orang tua","Minggu ini mencari info SMK jurusan desain dan ikut ekskul seni"],3,"Langkah nyata punya tindakan, waktu, dan bisa dilakukan sekarang."],
+["Temanmu menyebut kelebihanmu yang berbeda dari penilaianmu. Sikap yang tepat…",["Langsung menolak","Mempertimbangkannya sebagai bahan refleksi","Marah","Berhenti mencoba"],1,"Masukan teman membantu kita melihat sisi diri yang belum disadari."]];
+function quiz(i){const a=$("qa");$("qres").style.display="none";a.style.display="block";
+if(i===0)score=0;
+$("pb").style.width=(i/Q.length*100)+"%";
+if(i>=Q.length){a.style.display="none";const n=Math.round(score/Q.length*100);$("sc").textContent=n;
+$("pr").textContent=n>=90?"Sangat Baik":n>=80?"Baik":n>=70?"Cukup":"Perlu Bimbingan";$("qres").style.display="block";return}
+const q=Q[i];a.innerHTML=`<p class="mut">Soal ${i+1} dari ${Q.length}</p><div class="q">${q[0]}</div>`;
+q[1].forEach((o,k)=>{const b=document.createElement("button");b.className="opt";b.textContent=o;
+b.onclick=()=>{a.querySelectorAll(".opt").forEach((x,j)=>{x.disabled=true;if(j===q[2])x.classList.add("ok")});
+const good=k===q[2];if(good)score++;else b.classList.add("no");
+const f=document.createElement("div");f.className="fb show "+(good?"ok":"no");f.textContent=(good?"Benar. ":"Belum tepat. ")+q[3];a.appendChild(f);
+const nb=document.createElement("button");nb.className="btn";nb.textContent=i<Q.length-1?"Soal berikutnya":"Lihat nilai";nb.onclick=()=>quiz(i+1);a.appendChild(nb);nb.focus()};
+a.appendChild(b)})}
+$("n4").onclick=()=>show(5);
+// refleksi dan sertifikat
+$("n5").onclick=()=>{$("cn").textContent=$("nm").value;$("ck").textContent=$("kl").value?"Kelas "+$("kl").value:"";
+$("cs").textContent=$("sc").textContent;$("cp").textContent=$("pr").textContent;
+$("cd").textContent=new Date().toLocaleDateString("id-ID",{day:"numeric",month:"long",year:"numeric"});show(6)};
+$("again").onclick=()=>{max=0;document.querySelectorAll("input,textarea,select").forEach(e=>e.value="");document.querySelectorAll(".chip").forEach(c=>c.setAttribute("aria-pressed","false"));
+$("pollfb").className="fb ok";$("n1").disabled=true;$("n3").disabled=true;$("cfb").className="fb";show(0)};
+show(0);
+</script>
+</body>
+</html>
